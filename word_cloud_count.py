@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 from tqdm import tqdm
 
 # Define the file path and read using pandas
-file_path = r"C:\Pam\Proj\DB_report\processing\phone_code_keyword_1.xlsx"
+file_path = {As_excel}
 df = pd.read_excel(file_path)
 
 # Sampling information
@@ -15,15 +15,15 @@ sample_size = int(len(df) * n_percent / 100)
 sampled_df = df.sample(n=sample_size, random_state=50)
 
 # Get unique result codes
-result_code = sampled_df['pamoareport_resultcodefromid'].unique()
+result_code = sampled_df['id'].unique()
 
 # Iterate through each result code and process the text
 for code in result_code:
-    filtered_df = sampled_df[sampled_df['pamoareport_resultcodefromid'] == code]
+    filtered_df = sampled_df[sampled_df['id'] == code]
     print(f"Result Code: {code}")
     
     # Concatenate all values in the 'pamoareport_info' column into a single string
-    text = ' '.join(tqdm(filtered_df['pamoareport_info'].fillna('').astype(str).str.lower().tolist(), desc="Concatenating text"))
+    text = ' '.join(tqdm(filtered_df['info'].fillna('').astype(str).str.lower().tolist(), desc="Concatenating text"))
     
     # Tokenize the concatenated string into individual words
     tokens = word_tokenize(text, engine='newmm')
